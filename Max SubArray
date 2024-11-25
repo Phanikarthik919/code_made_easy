@@ -1,0 +1,48 @@
+brute force approach (Time complexity O(n^2))
+
+int maxSubArray(int* nums, int numsSize) {
+    int index=0, total;
+    total = numsSize * (numsSize + 1) / 2;  // Calculates the total number of subarrays
+    int sub[total];  // Array to hold the sum of all subarrays
+
+    // Populate the sub[] array with sums of all subarrays
+    for(int i = 0; i < numsSize; i++) {
+        int sum = 0;
+        for(int j = i; j < numsSize; j++) {
+            sum += nums[j];  // Add the element at index j to sum
+            sub[index++] = sum;  // Store the sum in sub[]
+        }
+    }
+
+    // Find the maximum subarray sum from the sub[] array
+    int max = INT_MIN;  // Initialize max to the smallest possible integer value
+    for(int k = 0; k < total; k++) {
+        if(sub[k] > max) {
+            max = sub[k];  // Update max if a larger sum is found
+        }
+    }
+
+    printf("%d", max);  // Print the maximum subarray sum
+    return 0;
+}
+____________________________________________________OR_______________________________________________________
+Kendal's most effitient (Time complexity O(n))
+
+
+int maxSubArray(int* nums, int numsSize) {
+    int max_sum = INT_MIN;  // Initialize to a very small value to handle negative numbers
+    int current_sum = 0;
+    
+    for (int i = 0; i < numsSize; i++) {
+        current_sum += nums[i];  // Add the current element to the current subarray sum
+        
+        if (current_sum > max_sum) {
+            max_sum = current_sum;  // Update max_sum if the current subarray sum is larger
+        }
+        
+        if (current_sum < 0) {
+            current_sum = 0;  // If the current sum is negative, reset it to 0
+        }
+    }
+    
+    return max_sum;
