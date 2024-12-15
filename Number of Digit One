@@ -1,0 +1,57 @@
+public int countDigitOne(int n) {
+    int count = 0;
+    for (long k = 1; k <= n; k *= 10) {
+        long r = n / k; // Quotient when dividing n by k
+        long m = n % k; // Remainder when dividing n by k
+
+        count += (r + 8) / 10 * k + (r % 10 == 1 ? m + 1 : 0);
+    }
+    return count;
+}
+===========================================================================================
+Key Steps in the Code
+_____________________
+Variables Initialization:
+
+count: Tracks the total number of 1s found.
+k: Starts as 1, representing the current digit's place value (units, tens, hundreds, etc.).
+Iterate Over Each Place:
+
+The loop continues while k <= n, meaning it processes each place value of the number n.
+Calculate Contributions for Place k:
+
+r = n / k: The quotient when dividing n by k, representing the digits to the left of the current place.
+m = n % k: The remainder, representing the digits to the right of the current place.
+Count Contributions of 1s at Place k:
+
+(r + 8) / 10 * k: Determines how many full cycles of 1s appear at the current place. Adding 8 ensures rounding up correctly for integer division.
+(r % 10 == 1 ? m + 1 : 0): Adds the contribution of the current place if the digit is exactly 1.
+Increment k:
+
+k is multiplied by 10 to move to the next higher place value.
+Return the Total Count:
+
+The accumulated count is returned.
+===========================================================================================
+To count the digit 1 in numbers from 0 to 
+n=13, the algorithm analyzes each digit's position (units, tens, etc.) using a variable k.
+It calculates contributions from higher digits and the current digit using efficient formulas.
+
+Iteration 1: 
+k=1 (Units Place)
+Higher digits contribute 
+(r+8)/10×k=2 cycles of 1 in the units place.
+The last digit is not 1, so no additional contribution.
+Count: 2
+
+Iteration 2: 
+k=10 (Tens Place)
+Higher digits contribute 
+10, while the tens digit equals 1, adding 
+m+1=4.
+Count: 
+2+10+4=6.
+The loop exits when 
+k>n. Final count: 6. This includes 1 in 1, 10, 11, 12, and 13 efficiently in 
+O(logn)
+
